@@ -25,32 +25,22 @@ optional arguments:
 ```
 ./logistic_regresion_test.py
 ```
-
-![](img/Figure_2d_1.png) 
-
-![](img/Figure_2d_2.png)
-
-
+![](img/Figure_2d_1.png)| ![](img/Figure_2d_2.png)
+----------------------  | ------------------------
 ```
 ./logistic_regresion_test.py --random -N=50000 --batch_size=50 --iterations=200
 ```
 
-![](img/Figure_2d_3.png) 
-
-![](img/Figure_2d_4.png)
+![](img/Figure_2d_3.png)| ![](img/Figure_2d_4.png)
+----------------------  | ------------------------
 
 ```
 ./logistic_regresion_test.py --3d
 ```
-
-![](img/Figure_3d_1.png) 
-
-![](img/Figure_3d_2.png)
-
+![](img/Figure_3d_1.png)| ![](img/Figure_3d_2.png)
+----------------------  | ------------------------
 ```
 ./logistic_regresion_test.py --3d --random
 ```
-
-![](img/Figure_3d_3.png) 
-
-![](img/Figure_3d_4.png)
+![](img/Figure_3d_1.png)| ![](img/Figure_3d_2.png)
+----------------------  | ------------------------
