@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import ep3
 
-def generate_dataset(mean1, mean2, cov1, cov2, N=1000, ratio=0.5, plot=False):
+def generate_dataset(mean1, mean2, cov1, cov2, N=10000, ratio=0.5, plot=False):
     '''Generates the dataset'''
     N1 = int(N * ratio)
     N2 = N - N1
@@ -21,7 +21,9 @@ def generate_dataset(mean1, mean2, cov1, cov2, N=1000, ratio=0.5, plot=False):
     Y = Y[perm]
     if plot:
         plt.axis('equal')
-        plt.scatter(X[:,0], X[:,1], c=['green' if y > 0 else 'orange' for y in Y])
+        plt.scatter(X[:,0], X[:,1], c=['yellow' if y > 0 else 'purple' for y in Y])
+        plt.scatter(mean1[0], mean1[1], c='orange')
+        plt.scatter(mean2[0], mean2[1], c='magenta')
         plt.show()
     
     return X, Y
@@ -33,5 +35,12 @@ if __name__ == '__main__':
     cov1 = [[1, 0], [0, 1]]
     cov2 = [[1, 0], [0, 1]]
 
-    X, y = generate_dataset(mean1, mean2, cov1, cov2)
-    ep3.logistic_fit(X, y)
+    X, y = generate_dataset(mean1, mean2, cov1, cov2, plot=True)
+    w = ep3.logistic_fit(X, y, batch_size=1, learning_rate=0.1, num_iterations=100)
+    P = ep3.logistic_predict(X, w)
+
+    plt.axis('equal')
+    plt.scatter(X[:, 0], X[:, 1], c=[p for p in P])
+    plt.scatter(mean1[0], mean1[1], c='orange')
+    plt.scatter(mean2[0], mean2[1], c='magenta')
+    plt.show()
