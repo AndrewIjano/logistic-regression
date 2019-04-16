@@ -44,3 +44,8 @@ optional arguments:
 ```
 ![](img/Figure_3d_1.png)| ![](img/Figure_3d_2.png)
 ----------------------  | ------------------------
+```
+./logistic_regresion_test.py -N=1000 --batch_size=1000 --plot_error
+```
+![](img/Figure_error_1.png)| ![](img/Figure_error_2.png) | ![](img/Figure_error_3.png)
+-------------------------  | --------------------------- | ---------------------------

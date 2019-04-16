@@ -21,7 +21,7 @@ def logistic_fit(X, y, w=None, batch_size=None, learning_rate=1e-2,
             batch_end = batch_ini + batch_size
             
             gradient = (-1/batch_size) * sum(
-                y[i]*Xe[i] / (1 + math.exp((y[i]*w.T).dot(Xe[i]))) 
+                y[i]*Xe[i] / (1 + np.exp((y[i]*w.T).dot(Xe[i]))) 
                 for i in range(batch_ini, batch_end)
             )
             
@@ -30,8 +30,11 @@ def logistic_fit(X, y, w=None, batch_size=None, learning_rate=1e-2,
 
             batch_ini = batch_end
 
+    def in_sample_error(w):
+        return 1/N * sum(np.log1p(np.exp(-yn*w.T.dot(xn))) for xn, yn in zip(Xe, y))
+
     if return_history:
-        return w, w_list
+        return w, list(map(in_sample_error, w_list))
     return w
 
 def logistic_predict(X, w):
@@ -39,6 +42,6 @@ def logistic_predict(X, w):
     N, d = X.shape
     Xe = np.hstack((np.ones((N, 1)), X))
 
-    def h(s): return math.exp(s) / (1 + math.exp(s))
+    def h(s): return np.exp(s) / (1 + np.exp(s))
 
     return [h(w.T.dot(x)) for x in Xe] 

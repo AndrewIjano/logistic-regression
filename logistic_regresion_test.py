@@ -6,6 +6,13 @@ import ep3
 import argparse
 
 
+def plot_error_history(error_history):
+    '''Plots the in sample-error history'''
+    plt.plot(error_history)
+    plt.xlabel('Weights')
+    plt.ylabel('In-sample error')
+    plt.show()
+
 def plot_dataset(X, mean1, mean2, color):
     '''Plots a 2D or 3D dataset'''
     if len(mean1) == 2:
@@ -46,17 +53,20 @@ def generate_dataset(mean1, mean2, cov1, cov2, N=10000, ratio=0.5, plot=False):
     return X, Y
 
 def generate_mean(dimension, is_random, no_random_value=2):
+    '''Generates a dimension-D point'''
     if is_random:
         return np.random.choice(5, dimension)
     return [no_random_value] * dimension
 
 def generate_cov(dimension, is_random, no_random_value=1):
+    '''Generates a dimension x dimension covariance matrix'''
     if is_random:
         A = np.random.rand(dimension, dimension)
         return A.dot(A.T)
     return no_random_value * np.identity(dimension)
 
 def parse_arguments():
+    '''Parses the given arguments'''
     parser = argparse.ArgumentParser()
     parser.add_argument('-N', dest='N',default=50000,
                         help='the number of samples used', type=int)
@@ -74,6 +84,9 @@ def parse_arguments():
     parser.add_argument('--random', dest='is_random', action='store_const',
                         const=True, default=False,
                         help='use random means and covariances')
+    parser.add_argument('--plot_error', dest='is_ploting_error', action='store_const',
+                        const=True, default=False,
+                        help='plot the in sample error graph')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -87,8 +100,14 @@ if __name__ == '__main__':
     cov2 = generate_cov(dimension, args.is_random)
 
     X, y = generate_dataset(mean1, mean2, cov1, cov2, N=args.N, plot=True)
-    w = ep3.logistic_fit(X, y, batch_size=args.b_size,
-                         learning_rate=args.l_rate, num_iterations=args.iter)
+    w = ep3.logistic_fit(X, y, batch_size=args.b_size, 
+                         learning_rate=args.l_rate, num_iterations=args.iter,
+                         return_history=args.is_ploting_error)
+    
+    if args.is_ploting_error:
+        w, error_history = w
+        plot_error_history(error_history)
+    
     P = ep3.logistic_predict(X, w)
 
     plot_dataset(X, mean1, mean2, [p for p in P])
