@@ -1,4 +1,4 @@
-# Logistic Regression
+# :bar_chart: Logistic Regression
 
 ## Description
 Implements a logistic regression algorithm using gradient descent.
